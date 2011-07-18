@@ -13,15 +13,15 @@ def feed_db():
             sn[key] = snapshot[key]
         try:
             sn.save()
-            logging.info('DB feeded')
+            logging.info('DB fed')
         except DuplicateKeyError:
-            logging.warning('snapshot already in db: %s' % snapshot['timestamp'])
+            logging.warning('snapshot already in db: [%s]' % snapshot['timestamp'])
 
 
 if __name__ == '__main__':
     # initial db-feed before timer starts
     feed_db()
     io_loop = ioloop.IOLoop.instance()
-    feed_db_scheduler = ioloop.PeriodicCallback(feed_db, 1000*60*10, io_loop=io_loop)
+    feed_db_scheduler = ioloop.PeriodicCallback(feed_db, 1000 * 60 * 5, io_loop=io_loop)
     feed_db_scheduler.start()
     io_loop.start()

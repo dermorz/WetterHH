@@ -10,7 +10,7 @@ def parse_data():
     soup = BeautifulSoup(wetter)
     table = soup.find('table')
     rows = table.findAll('tr')
-    for n in xrange(1,11):
+    for n in xrange(1, 11):
         cols = rows[n].findAll('td')
         dtstring = cols[7].string + cols[8].string
         snapshot = {'temperature': float(cols[0].string),
