@@ -2,6 +2,7 @@
 from BeautifulSoup import BeautifulSoup
 from datetime import datetime
 from urllib2 import urlopen
+import logging
 
 def parse_data():
     data = []
@@ -11,20 +12,19 @@ def parse_data():
     table = soup.find('table')
     rows = table.findAll('tr')
     for n in xrange(1, 11):
-        cols = rows[n].findAll('td')
-        dtstring = cols[7].string + cols[8].string
-        snapshot = {'temperature': float(cols[0].string),
-                    'humidity': int(cols[1].string),
-                    'airpressure': float(cols[2].string),
-                    'precipitation': float(cols[3].string),
-                    'irradiance': int(cols[4].string),
-                    'windspeed': float(cols[5].string),
-                    'winddirection': int(cols[6].string),
-                    'timestamp': datetime.strptime(dtstring, "%d.%m.%Y%H:%M")}
-        data.append(snapshot)
+        try:
+            cols = rows[n].findAll('td')
+            dtstring = cols[7].string + cols[8].string
+            snapshot = {'temperature': float(cols[0].string),
+                        'humidity': int(cols[1].string),
+                        'airpressure': float(cols[2].string),
+                        'precipitation': float(cols[3].string),
+                        'irradiance': int(cols[4].string),
+                        'windspeed': float(cols[5].string),
+                        'winddirection': int(cols[6].string),
+                        'timestamp': datetime.strptime(dtstring, "%d.%m.%Y%H:%M")}
+            data.append(snapshot)
+        except:
+            logging.WARNING("parsing error")
     return data
-
-# for testing
-if __name__ == "__main__":
-    print(parse_data())
 
