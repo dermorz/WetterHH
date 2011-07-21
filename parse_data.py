@@ -25,6 +25,6 @@ def parse_data():
                         'timestamp': datetime.strptime(dtstring, "%d.%m.%Y%H:%M")}
             data.append(snapshot)
         except:
-            logging.WARNING("parsing error")
+            logging.warning("parsing error")
     return data
 
