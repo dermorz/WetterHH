@@ -1,11 +1,14 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import db
+import main
+
 from BeautifulSoup import BeautifulSoup
-from datetime import datetime
+import datetime
 from urllib2 import urlopen
-import logging
 
 def parse_data():
-    data = []
     url = "http://wetter.rzbd.haw-hamburg.de/php/aktuell_old.php3"
     wetter = urlopen(url).read()
     soup = BeautifulSoup(wetter)
@@ -22,9 +25,8 @@ def parse_data():
                         'irradiance': int(cols[4].string),
                         'windspeed': float(cols[5].string),
                         'winddirection': int(cols[6].string),
-                        'timestamp': datetime.strptime(dtstring, "%d.%m.%Y%H:%M")}
-            data.append(snapshot)
+                        'timestamp': datetime.datetime.strptime(
+                                                dtstring, "%d.%m.%Y%H:%M")}
+            db.save(snapshot)
         except:
-            logging.warning("parsing error")
-    return data
-
+            main.log.warning("parsing error")
