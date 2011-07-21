@@ -11,6 +11,7 @@ snapshot = {'temperature': float,
             'winddirection': int,
             'timestamp': datetime.datetime}\
 """
+import main
 
 import pymongo
 from datetime import datetime
@@ -22,6 +23,7 @@ collection.ensure_index('timestamp', unique=True)
 
 def save(snapshot):
     collection.save(snapshot)
+    main.log.debug("Snapshot saved: %s" % snapshot['timestamp'])
     connection.end_request()
 
 def get_last_n_snapshots(data_type, n):
