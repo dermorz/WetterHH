@@ -14,7 +14,7 @@ YLABELS = {'temperature': u"Temperatur [°C]",
 
 #todo: pretty axis-scales
 def graph(graph_type): 
-    values = [s[graph_type] for s in db.get_last_hour(graph_type)]
+    values = [s[graph_type] for s in db.get_last_6_hours(graph_type)]
     values.reverse()
     plt.plot(values)
     plt.ylabel(YLABELS[graph_type])
