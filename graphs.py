@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import StringIO, Image
+import StringIO
 
 YLABELS = {'temperature': u"Temperatur [°C]",
            'airpressure': u"Luftdruck [hPa]"}
