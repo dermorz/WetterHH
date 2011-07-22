@@ -34,3 +34,4 @@ if __name__ == '__main__':
     feed_db_scheduler = ioloop.PeriodicCallback(parser.parse_data, 1000 * 60 * 5, io_loop=io_loop)
     feed_db_scheduler.start()
     io_loop.start()
+    log.debug("Server started.")
