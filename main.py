@@ -13,8 +13,7 @@ log.setLevel(logging.DEBUG)
 
 class IndexRequestHandler(web.RequestHandler):
     def get(self):
-        self.write("<a href='/gtemperature'>temperature</a><br/>\
-                    <a href='/gairpressure'>airpressure</a>")
+        self.render("templates/base.html", title="WetterHH", graphs=graphs.YLABELS)
 
 class GraphRequestHandler(web.RequestHandler):
     def get(self, graph_type):
