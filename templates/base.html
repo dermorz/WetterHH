@@ -1,0 +1,55 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>{{ title }}</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.css" />
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.js"></script>
+</head> 
+<body>
+
+<!-- Start of first page -->
+<div data-role="page" id="overview">
+
+	<div data-role="header">
+		<h1>WetterHH</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">
+		{% for k,v in graphs.iteritems() %}
+         <p><a href="#{{ escape(k) }}" data-role="button">{{ v }}</a></p>
+		{% end %}	
+			
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+{% for k,v in graphs.iteritems() %}
+<!-- Start of second page: #two --> 
+<div data-role="page" id="{{ k }}" data-theme="a"> 
+ 
+	<div data-role="header"> 
+		<h1>{{ v }}</h1> 
+	</div><!-- /header --> 
+ 
+	<div data-role="content" data-theme="a">	
+		
+			<img width="100%" src="g{{ k }}">
+		
+		<p><a href="/" data-direction="reverse" data-role="button" data-theme="b">Back to Overview</a></p>	
+		
+	</div><!-- /content --> 
+	
+	<div data-role="footer"> 
+		<h4></h4> 
+	</div><!-- /footer --> 
+</div><!-- /page two --> 
+{% end %}
+
+</body>
+</html>
