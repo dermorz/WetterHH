@@ -27,7 +27,7 @@ def save(snapshot):
     connection.end_request()
 
 def get_last_n_snapshots(data_type, n):
-    return collection.find({}, {data_type: 1}).sort('timestamp', -1).limit(n)
+    return collection.find({}, {data_type: 1, 'timestamp': 1}).sort('timestamp', -1).limit(n)
 
 # following just for readability
 def get_last_hour(data_type):
