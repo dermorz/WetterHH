@@ -31,15 +31,16 @@ def graph(graph_type):
     ax.plot(timestamps, values)
     ax.xaxis.set_major_locator(hours)
     ax.xaxis.set_major_formatter(hour_format)
-    ax.xaxis.set_minor_locator(quarter_hours)
+    
+    #needs some tweaking:
+    #ax.xaxis.set_minor_locator(quarter_hours)
     
     ax.set_ylim(min(values)-5, max(values)+5)
     
+    ax.grid(True)
+    
     fig.autofmt_xdate()
     
-    #axis = plt.axis()
-    #plt.axis([axis[0], axis[1], axis[2]-5, axis[3]+5])
-    #plt.ylabel(YLABELS[graph_type])
     imgdata = StringIO.StringIO()
     plt.savefig(imgdata, format='png')
     plt.clf()
