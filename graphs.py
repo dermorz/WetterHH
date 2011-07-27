@@ -35,7 +35,7 @@ def graph(graph_type):
     #needs some tweaking:
     #ax.xaxis.set_minor_locator(quarter_hours)
     
-    ax.set_ylim(min(values)-3, max(values)+3)
+    ax.set_ylim(min(values)-5, max(values)+5)
     
     ax.grid(True)
     
