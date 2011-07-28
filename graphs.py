@@ -26,7 +26,7 @@ def graph(graph_type):
     quarter_hours = mdates.MinuteLocator(interval=15)
     hour_format = mdates.DateFormatter("%H:%M")
     
-    fig = plt.figure()
+    fig = plt.figure(figsize=(4, 3), dpi=240)
     ax = fig.add_subplot(111)
     ax.plot(timestamps, values)
     ax.xaxis.set_major_locator(hours)
