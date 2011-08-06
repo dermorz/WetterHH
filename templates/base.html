@@ -10,11 +10,11 @@
 </head> 
 <body>
 
-<!-- Start of first page -->
+<!-- Start of graph type choice -->
 <div data-role="page" id="overview">
 
 	<div data-role="header">
-		<h1>WetterHH</h1>
+		<h1>{{ title }}</h1>
 	</div><!-- /header -->
 
 	<div data-role="content">
@@ -27,11 +27,38 @@
 	<div data-role="footer">
 		<h1></h1>
 	</div><!-- /footer -->
-</div><!-- /page -->
+</div><!-- End of graph type choice -->
 
+
+<!-- Start of interval choice -->
 {% for k,v in graphs.iteritems() %}
-<!-- Start of following pageS --> 
-<div data-role="page" id="{{ k }}" data-theme="a"> 
+<div data-role="page" id="{{k}}">
+
+	<div data-role="header">
+		<h1>{{ v }}</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">
+		{% for interval in sorted(intervals, key=lambda key: intervals[key]['sort']) %}
+         <p><a href="#{{ '%s-%s' % (k,escape(interval)) }}" data-role="button">{{ intervals[interval]['label'] }}</a></p>
+		{% end %}
+		<p><a href="/" data-rel="back" data-direction="reverse" data-role="button" data-theme="b">Zurück</a></p>	
+	</div><!-- /content -->
+
+	<div data-role="footer">
+		<h1></h1>
+	</div><!-- /footer -->
+</div>
+{% end %}
+<!-- End of interval choice -->
+
+
+
+
+<!-- Start of graph displays -->
+{% for k,v in graphs.iteritems() %}
+{% for interval in sorted(intervals, key=lambda key: intervals[key]['sort']) %}
+<div data-role="page" id="{{ '%s-%s' % (k,escape(interval)) }}" data-theme="a"> 
  
 	<div data-role="header"> 
 		<h1>{{ v }}</h1> 
@@ -39,7 +66,7 @@
  
 	<div data-role="content" data-theme="a">	
 		
-			<img width="100%" src="g{{ k }}">
+			<img width="100%" src="/graph/{{ '%s-%s' % (k,escape(interval)) }}.png">
 		
 		<p><a href="/" data-rel="back" data-direction="reverse" data-role="button" data-theme="b">Back to Overview</a></p>	
 		
@@ -48,8 +75,10 @@
 	<div data-role="footer">
 		<h1></h1> 
 	</div><!-- /footer --> 
-</div><!-- /page n --> 
+</div> 
 {% end %}
+{% end %}
+<!-- End of graph displays -->
 
 </body>
 </html>

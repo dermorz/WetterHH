@@ -10,11 +10,34 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import StringIO
 
-YLABELS = {'temperature': u"Temperatur [°C]",
-           'airpressure': u"Luftdruck [hPa]"}
+GRAPH_TYPES = {'temperature': u"Temperatur [°C]",
+               'airpressure': u"Luftdruck [hPa]"}
 
-def graph(graph_type):
-    snapshots = [sn for sn in db.get_last_6_hours(graph_type)]
+GRAPH_INTERVALS = {'last_hour':
+                        {'func': db.get_last_hour,
+                         'label': "Die letzte Stunde",
+                         'sort': 1},
+                   'last_6_hours':
+                        {'func': db.get_last_6_hours,
+                         'label': "Die letzten 6 Stunden",
+                         'sort': 2},
+                   'last_day':
+                        {'func': db.get_last_day,
+                         'label': "Der letzte Tag",
+                         'sort': 3},
+                   'last_3_days':
+                        {'func': db.get_last_3_days,
+                         'label': "Die letzten 3 Tage",
+                         'sort': 4},
+                   'last_week':
+                        {'func': db.get_last_week,
+                         'label': "Die letzte Woche",
+                         'sort': 5}}
+                   
+
+def graph(graph_type, graph_interval):
+    data_getter = GRAPH_INTERVALS[graph_interval]['func']
+    snapshots = [sn for sn in data_getter(graph_type)]
     
     values = [snapshot[graph_type] for snapshot in snapshots]
     values.reverse()
@@ -23,7 +46,7 @@ def graph(graph_type):
     timestamps.reverse()
     
     hours = mdates.HourLocator()
-    quarter_hours = mdates.MinuteLocator(interval=15)
+    quarter_hours = mdates.MinuteLocator(byminute=1, interval=15)
     hour_format = mdates.DateFormatter("%H:%M")
     
     fig = plt.figure(figsize=(4, 3), dpi=240)
@@ -33,9 +56,9 @@ def graph(graph_type):
     ax.xaxis.set_major_formatter(hour_format)
     
     #needs some tweaking:
-    #ax.xaxis.set_minor_locator(quarter_hours)
+    ax.xaxis.set_minor_locator(quarter_hours)
     
-    ax.set_ylim(min(values)-5, max(values)+5)
+    ax.set_ylim(min(values) - 5, max(values) + 5)
     
     ax.grid(True)
     
